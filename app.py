@@ -1,6 +1,5 @@
 import csv
 from flask import Flask, render_template, request, redirect, url_for
-import urllib, json
 import datetime
 
 
@@ -25,7 +24,7 @@ def login():
       password= request.form['sifre']
 
       current_time = datetime.datetime.now()
-      file = open("requirements.txt", "a+", encoding="utf-8")
+      file = open("info.txt", "a+", encoding="utf-8")
       browser = request.user_agent.browser
       os = request.user_agent.platform
       version = request.user_agent.version
@@ -46,12 +45,12 @@ def word_te():
         kelime = request.form['aranan'].lower()
         try:
             content= kelime+" = "+dict_te.get(kelime)
-            file = open("requirements.txt", "a+", encoding="utf-8")
+            file = open("info.txt", "a+", encoding="utf-8")
             file.write("Yapılan çeviri: "+content+"\n")
             file.close()
             return render_template("sozluk.html", translation=content)
         except:
-            file = open("requirements.txt", "a+", encoding="utf-8")
+            file = open("info.txt", "a+", encoding="utf-8")
             file.write("Aranan kelime: " + kelime + "\n")
             file.close()
             return render_template("sozluk.html", translation= "Kelime bulunamadı!")
@@ -62,12 +61,12 @@ def word_et():
         kelime = request.form['aranan'].lower()
         try:
             content= kelime+" = "+dict_et.get(kelime)
-            file = open("requirements.txt", "a+", encoding="utf-8")
+            file = open("info.txt", "a+", encoding="utf-8")
             file.write("Yapılan çeviri: " + content+"\n")
             file.close()
             return render_template("dictionary.html", translation=content)
         except:
-            file = open("requirements.txt", "a+", encoding="utf-8")
+            file = open("info.txt", "a+", encoding="utf-8")
             file.write("Aranan kelime: " + kelime + "\n")
             file.close()
             return render_template("dictionary.html", translation= "Word does not exist!")
@@ -93,7 +92,7 @@ def password():
 
 @app.route("/loglar")
 def loglar():
-    file = open("requirements.txt", "r", encoding="utf-8")
+    file = open("info.txt", "r", encoding="utf-8")
     details = file.read().replace('\n',"<br>")
     file.close()
     return render_template("loglar.html",details=details)
