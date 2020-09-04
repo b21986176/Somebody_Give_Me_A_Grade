@@ -15,8 +15,9 @@ app=Flask(__name__)
 
 @app.route("/")
 def post():
-    return render_template("post.html")
+    return redirect(url_for("sozluk" ))
 
+"""
 @app.route('/datas',methods = ['POST'])
 def login():
    if request.method == 'POST':
@@ -33,10 +34,16 @@ def login():
       file.close()
 
       return redirect(url_for("sozluk" ))
-
+"""
 
 @app.route("/sozluk")
 def sozluk():
+    current_time = datetime.datetime.now()
+    file = open("info.txt", "a+", encoding="utf-8")
+    browser = request.user_agent.browser
+    os = request.user_agent.platform
+    file.write("\nİşletim Sistemi: " + os + "\nTarayıcı: " + browser + "\nGiriş Zamanı: " + str(current_time) + "\n")
+    file.close()
     return render_template("sozluk.html")
 
 @app.route("/word_te",methods = ['POST'])
@@ -74,6 +81,12 @@ def word_et():
 
 @app.route("/dictionary")
 def dictionary():
+    current_time = datetime.datetime.now()
+    file = open("info.txt", "a+", encoding="utf-8")
+    browser = request.user_agent.browser
+    os = request.user_agent.platform
+    file.write("\nİşletim Sistemi: " + os + "\nTarayıcı: " + browser + "\nGiriş Zamanı: " + str(current_time) + "\n")
+    file.close()
     return render_template("dictionary.html")
 
 @app.route("/logs_login")
